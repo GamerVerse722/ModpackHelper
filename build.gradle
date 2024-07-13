@@ -47,13 +47,11 @@ minecraft {
         client {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', mod_id
-            args '--mods', 'run/mods'
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
-            args '--mods', 'run/mods'
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
@@ -61,7 +59,6 @@ minecraft {
         // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
             property 'forge.enabledGameTestNamespaces', mod_id
-            args '--mods', 'run/mods'
         }
 
         data {
@@ -86,25 +83,29 @@ repositories {
      flatDir {
          dir 'libs'
      }
+    mavenCentral()
     maven {
         url = "https://www.cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
     }
-    mavenCentral()
+    maven {
+        url "https://maven.shedaniel.me/"
+        content {
+            includeGroup("me.shedaniel.cloth")
+        }
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor "org.spongepowered:mixin:0.8.4:processor"
-    implementation fg.deobf("curse.maven:not-enough-crashes-forge-442354:5035999")
+    runtimeOnly fg.deobf("curse.maven:not-enough-crashes-forge-442354:5035999")
+//    implementation fg.deobf("curse.maven:cloth-config/files-348521:4973441")
+    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.118")
 }
 
-// This block of code expands all declared replace properties in the specified resource targets.
-// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
-// When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
-// See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
