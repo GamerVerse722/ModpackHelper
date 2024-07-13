@@ -1,7 +1,6 @@
 package net.gamerverse.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.gamerverse.modpack.ModpackHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.settings.KeyConflictContext;
 

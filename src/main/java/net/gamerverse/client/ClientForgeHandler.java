@@ -24,7 +24,7 @@ public class ClientForgeHandler {
             if (minecraft.player == null || minecraft.level == null) {
                 return;
             }
-            HitResult hitResult = minecraft.player.pick(5, 0, true);
+            HitResult hitResult = minecraft.player.pick(Config.idDistance, 0, true);
             switch (hitResult.getType()) {
                 case BLOCK:
                     BlockHitResult blockHitResult = (BlockHitResult) hitResult;
@@ -34,8 +34,6 @@ public class ClientForgeHandler {
                     var blockId = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString();
 
                     setClipboard(blockId);
-                    sendSystemMessage("Copied ( " + blockId + " ) to clipboard");
-                    displayClientMessage("Copied ( " + blockId + " ) to clipboard", true);
                     sendMessage("Copied ( " + blockId + " ) to clipboard");
             }
         }
@@ -52,12 +50,12 @@ public class ClientForgeHandler {
         minecraft.player.sendSystemMessage(Component.literal(message));
     }
 
-    private static void displayClientMessage(String message, boolean actionBar) {
+    private static void displayClientMessage(String message) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null) {
             return;
         }
-        minecraft.player.displayClientMessage(Component.literal(message), actionBar);
+        minecraft.player.displayClientMessage(Component.literal(message), true);
     }
 
     private static void sendMessage(String message) {
@@ -65,10 +63,8 @@ public class ClientForgeHandler {
         switch (Config.idOutputMode) {
             case "Chat":
                 sendSystemMessage(message);
-            case "Title":
-                displayClientMessage(message, false);
             case "ActionBar":
-                displayClientMessage(message, true);
+                displayClientMessage(message);
         }
     }
 }
