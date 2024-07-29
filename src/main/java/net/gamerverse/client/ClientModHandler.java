@@ -12,7 +12,7 @@ public class ClientModHandler {
 
     @SubscribeEvent
     public static void registerKeys(RegisterKeyMappingsEvent event) {
-        event.register(Keybindings.INSTANCE.copying);
+        event.register(Keybindings.INSTANCE.copyBlockId);
 
     }
 }

@@ -1,44 +1,54 @@
 package net.gamerverse.modpack;
 
-
+import net.gamerverse.modpack.config.FormatMode;
+import net.gamerverse.modpack.config.NotificationMode;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-
-import java.util.Arrays;
-
 
 @Mod.EventBusSubscriber(modid = ModpackHelper.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class Config
-{
-    public static final String[] VALID_OUTPUT_MODES = new String[]{"Chat", "ActionBar", "None"};
+public class Config {
 
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    public static final ForgeConfigSpec.ConfigValue<Integer> ID_DISTANCE = BUILDER
-            .comment("Range of getting block id 0 <= 25")
-            .defineInRange("idDistance", 5, 0, 25);
+    private static final String CATEGORY_PICK = "copy_block_id";
+    private static final String CATEGORY_NOTIFICATION = "notification_setting";
 
-    public static final ForgeConfigSpec.ConfigValue<String> ID_OUTPUT_MODE = BUILDER
-            .comment("Message Output valid option are ['Chat', 'ActionBar', 'None']")
-            .define("idOutputMode", "ActionBar");
+    public static final ForgeConfigSpec.IntValue PICK_DISTANCE;
+    public static final ForgeConfigSpec.BooleanValue PICK_FLUIDS;
+    public static final ForgeConfigSpec.EnumValue<FormatMode> PICK_FORMAT_MODE;
 
+    public static final ForgeConfigSpec.BooleanValue NOTIFICATION_FORMATING;
+    public static final ForgeConfigSpec.EnumValue<NotificationMode> NOTIFICATION_LOCATION;
 
-    static final ForgeConfigSpec SPEC = BUILDER.build();
+    static {
+        BUILDER.comment("Copy id settings").push(CATEGORY_PICK);
 
-    public static String idOutputMode;
-    public static Integer idDistance;
+        PICK_DISTANCE = BUILDER
+                .comment("Range of getting block id 0 <= 25")
+                .defineInRange("pick_distance", 5, 0, 25);
 
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event)
-    {
-        idOutputMode = ID_OUTPUT_MODE.get();
-        idDistance = ID_DISTANCE.get();
+        PICK_FLUIDS = BUILDER
+                .comment("Option to copy the id of liquids")
+                .define("pick_fluid", false);
 
-        if (!Arrays.asList(VALID_OUTPUT_MODES).contains(idOutputMode)) {
-            idOutputMode = "ActionBar";
-        }
+        PICK_FORMAT_MODE = BUILDER
+                .comment("The format that the copy block is")
+                .defineEnum("pick_format_mode", FormatMode.NONE);
+
+        BUILDER.pop();
+
+        BUILDER.comment("Notification Setting").push(CATEGORY_NOTIFICATION);
+
+        NOTIFICATION_FORMATING = BUILDER
+                .comment("If to have formating to the notification")
+                .define("notification_formating", true);
+
+        NOTIFICATION_LOCATION = BUILDER
+                .comment("Notification location of block id")
+                .defineEnum("notification_mode", NotificationMode.ACTION_BAR);
+
+        SPEC = BUILDER.build();
     }
-}
 
+    static final ForgeConfigSpec SPEC;
+}

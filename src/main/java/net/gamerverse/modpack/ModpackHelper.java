@@ -44,7 +44,6 @@ public class ModpackHelper
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-//            ClothConfig.load();
         }
     }
 }

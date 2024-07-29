@@ -90,20 +90,12 @@ repositories {
             includeGroup "curse.maven"
         }
     }
-    maven {
-        url "https://maven.shedaniel.me/"
-        content {
-            includeGroup("me.shedaniel.cloth")
-        }
-    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor "org.spongepowered:mixin:0.8.4:processor"
-    runtimeOnly fg.deobf("curse.maven:not-enough-crashes-forge-442354:5035999")
-//    implementation fg.deobf("curse.maven:cloth-config/files-348521:4973441")
-    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.118")
+    runtimeOnly fg.deobf("curse.maven:config-menus-forge-544048:4672356")
 }
 
 tasks.named('processResources', ProcessResources).configure {

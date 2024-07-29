@@ -1,6 +1,7 @@
 package net.gamerverse.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import net.gamerverse.modpack.ModpackHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.settings.KeyConflictContext;
 
@@ -9,10 +10,10 @@ public final class Keybindings {
 
     private Keybindings() {}
 
-    private static final String CATEGORY = "Modpack Helper";
+    private static final String CATEGORY = "key.categories." + ModpackHelper.MOD_ID;
 
-    public final KeyMapping copying = new KeyMapping(
-            "Copy Block Id",
+    public final KeyMapping copyBlockId = new KeyMapping(
+            "key." + ModpackHelper.MOD_ID + ".copy_block_id",
             KeyConflictContext.IN_GAME,
             InputConstants.getKey("key.mouse.middle"),
             CATEGORY
