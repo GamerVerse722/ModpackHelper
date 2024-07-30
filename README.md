@@ -1,5 +1,7 @@
 [![Discord Server](https://dcbadge.vercel.app/api/server/AjE6VMmRJ4)](https://discord.gg/AjE6VMmRJ4)
 
+# Mod Description
+
 This mod adds a way to copy the id of blocks and items quickly to your clipboard.
 
 Instead of having to these commands
