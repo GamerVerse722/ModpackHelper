@@ -1,4 +1,4 @@
-package net.gamerverse.client;
+package net.gamerverse.modpack.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.gamerverse.modpack.ModpackHelper;
@@ -15,7 +15,7 @@ public final class Keybindings {
     public final KeyMapping copyBlockId = new KeyMapping(
             "key." + ModpackHelper.MOD_ID + ".copy_block_id",
             KeyConflictContext.IN_GAME,
-            InputConstants.getKey("key.mouse.middle"),
+            InputConstants.UNKNOWN,
             CATEGORY
     );
 }

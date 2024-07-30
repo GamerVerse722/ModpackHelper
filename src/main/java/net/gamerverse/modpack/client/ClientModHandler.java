@@ -1,4 +1,4 @@
-package net.gamerverse.client;
+package net.gamerverse.modpack.client;
 
 
 import net.gamerverse.modpack.ModpackHelper;

@@ -1,4 +1,4 @@
-package net.gamerverse.client.blocktypes;
+package net.gamerverse.modpack.client.blocktypes;
 
 public enum BlockTypes {
     ITEM("item"),

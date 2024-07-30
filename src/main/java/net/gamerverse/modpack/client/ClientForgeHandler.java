@@ -1,8 +1,8 @@
-package net.gamerverse.client;
+package net.gamerverse.modpack.client;
 
 import com.mojang.logging.LogUtils;
-import net.gamerverse.client.blocktypes.BlockTypes;
-import net.gamerverse.client.blocktypes.FormatBlockId;
+import net.gamerverse.modpack.client.blocktypes.BlockTypes;
+import net.gamerverse.modpack.client.blocktypes.FormatBlockId;
 import net.gamerverse.modpack.Config;
 import net.gamerverse.modpack.ModpackHelper;
 import net.minecraft.client.Minecraft;
@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;

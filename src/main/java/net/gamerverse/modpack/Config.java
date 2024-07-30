@@ -34,7 +34,7 @@ public class Config {
 
         PICK_FLUIDS = BUILDER
                 .comment("Option to copy the id of liquids")
-                .define("pick_fluid", false);
+                .define("pick_fluid", true);
 
         PICK_AIR_FILTER = BUILDER
                 .comment("Option to get the id of air item in hand")
