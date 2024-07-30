@@ -6,7 +6,9 @@ import net.gamerverse.client.blocktypes.FormatBlockId;
 import net.gamerverse.modpack.Config;
 import net.gamerverse.modpack.ModpackHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,21 +39,43 @@ public class ClientForgeHandler {
         }
 
         HitResult hitResult = minecraft.player.pick(Config.PICK_DISTANCE.get(), 0, Config.PICK_FLUIDS.get());
-        if (hitResult.getType() == HitResult.Type.BLOCK) {
-            BlockHitResult blockHitResult = (BlockHitResult) hitResult;
-            var blockPos = blockHitResult.getBlockPos().immutable();
-            var blockState = minecraft.level.getBlockState(blockPos);
-
-            if (blockState.getFluidState().isSource()) {
-                var fluid = blockState.getFluidState().getType();
-                String fluidId = Objects.requireNonNull(ForgeRegistries.FLUIDS.getKey(fluid)).toString();
-                multiActions(BlockTypes.FLUID, fluidId);
-            } else {
-                var block = blockState.getBlock();
-                String blockId = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString();
-                multiActions(BlockTypes.BLOCK, blockId);
-            }
+        switch (hitResult.getType()) {
+            case BLOCK:
+                hitBlockType(hitResult);
+                break;
+            case MISS:
+                hitMissType();
+                break;
         }
+    }
+
+    private static void hitBlockType(HitResult hitResult) {
+        BlockHitResult blockHitResult = (BlockHitResult) hitResult;
+        BlockPos blockPos = blockHitResult.getBlockPos().immutable();
+        var blockState = minecraft.level.getBlockState(blockPos);
+
+        if (blockState.getFluidState().isSource()) {
+            var fluid = blockState.getFluidState().getType();
+            String fluidId = Objects.requireNonNull(ForgeRegistries.FLUIDS.getKey(fluid)).toString();
+            multiActions(BlockTypes.FLUID, fluidId);
+        } else {
+            var block = blockState.getBlock();
+            String blockId = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString();
+            multiActions(BlockTypes.BLOCK, blockId);
+        }
+    }
+
+    private static void hitMissType() {
+        if (minecraft.player == null) {
+            return;
+        }
+        Item playerMainHandItem = minecraft.player.getMainHandItem().getItem();
+        String itemId = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(playerMainHandItem)).toString();
+
+        if (Config.PICK_AIR_FILTER.get() && itemId.equals("minecraft:air")) {
+            return;
+        }
+        multiActions(BlockTypes.ITEM, itemId);
     }
 
     private static void multiActions(BlockTypes blockTypes, String blockId) {

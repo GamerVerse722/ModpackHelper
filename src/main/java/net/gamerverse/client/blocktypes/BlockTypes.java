@@ -1,6 +1,7 @@
 package net.gamerverse.client.blocktypes;
 
 public enum BlockTypes {
+    ITEM("item"),
     BLOCK("block"),
     FLUID("fluid");
 
