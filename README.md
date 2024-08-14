@@ -4,7 +4,7 @@
 
 This mod adds a way to copy the id of blocks and items quickly to your clipboard.
 
-Instead of having to these commands
+Instead of having to use these commands.
 
 ```/kubejs hand```
 
