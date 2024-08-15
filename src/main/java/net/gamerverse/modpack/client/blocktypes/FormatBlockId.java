@@ -1,6 +1,11 @@
 package net.gamerverse.modpack.client.blocktypes;
 
 import net.gamerverse.modpack.Config;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+
+import java.text.MessageFormat;
 
 public class FormatBlockId {
     public static String formatId(BlockTypes blockTypes, String blockId) {
@@ -13,6 +18,7 @@ public class FormatBlockId {
 
     private static String formatKubeJs(BlockTypes blockTypes, String blockId) {
         String quoteMode = Config.KUBEJS_QUOTES_MODE.get().quote;
+        print_formated_translation();
         return switch (blockTypes) {
             case ITEM, BLOCK -> quoteMode + blockId + quoteMode;
             case FLUID -> "Fluid.of(" + quoteMode + blockId + quoteMode + ")";
@@ -25,5 +31,16 @@ public class FormatBlockId {
             case BLOCK -> "<block:" + blockId + ">";
             case FLUID -> "<fluid:" + blockId + ">";
         };
+    }
+
+    private static final Minecraft minecraft = Minecraft.getInstance();
+
+    private static void print_formated_translation() {
+        String things = Component.translatable("chat.modpack_helper.things", "{}").getString();
+        if (minecraft.player != null) {
+            System.out.println(things);
+//            System.out.println(MessageFormat.format(things, "this"));
+            minecraft.player.displayClientMessage(Component.literal(things), true);
+        }
     }
 }

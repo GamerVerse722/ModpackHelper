@@ -36,6 +36,8 @@ minecraft {
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 "${mod_id}" {
@@ -96,6 +98,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor "org.spongepowered:mixin:0.8.4:processor"
     runtimeOnly fg.deobf("curse.maven:config-menus-forge-544048:4672356")
+    runtimeOnly fg.deobf("curse.maven:embeddium-908741:5566632")
 }
 
 tasks.named('processResources', ProcessResources).configure {

@@ -1,4 +1,5 @@
 {
     "key.categories.modpack_helper": "Modpack Helper",
-    "key.modpack_helper.copy_block_id": "Copy Id"
+    "key.modpack_helper.copy_block_id": "Copy Id",
+    "chat.modpack_helper.things": "Your age {0}"
 }
