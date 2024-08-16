@@ -1,11 +1,6 @@
 package net.gamerverse.modpack.client.blocktypes;
 
 import net.gamerverse.modpack.Config;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-
-import java.text.MessageFormat;
 
 public class FormatBlockId {
     public static String formatId(BlockTypes blockTypes, String blockId) {

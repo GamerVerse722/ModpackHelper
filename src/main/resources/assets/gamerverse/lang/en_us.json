@@ -1,7 +1,7 @@
 {
     "key.categories.modpack_helper": "Modpack Helper",
     "key.modpack_helper.copy_block_id": "Copy Id",
-    "component.modpack_helper.copied_to_clipboard": "Copied %s (%s) to clipboard.",
+    "modpack_helper.component.copied_to_clipboard": "Copied %s (%s) to clipboard.",
     "modpack_helper.blocktypes.item": "item",
     "modpack_helper.blocktypes.block": "block",
     "modpack_helper.blocktypes.fluid": "fluid"

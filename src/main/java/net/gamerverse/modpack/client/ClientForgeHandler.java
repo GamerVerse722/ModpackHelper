@@ -19,7 +19,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
-import java.text.MessageFormat;
 import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = ModpackHelper.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -97,12 +96,11 @@ public class ClientForgeHandler {
 
         MutableComponent finished_message;
         if (Config.NOTIFICATION_FORMATING.get()) {
-            finished_message = Component.translatable("component.modpack_helper.copied_to_clipboard", blockTypes.name, message);
+            finished_message = Component.translatable("modpack_helper.component.copied_to_clipboard", blockTypes.name, message);
 
         } else {
             finished_message = Component.literal(message);
         }
-        System.out.println(finished_message);
 
         switch (Config.NOTIFICATION_LOCATION.get()) {
             case CHAT:
