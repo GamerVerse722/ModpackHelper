@@ -8,6 +8,7 @@ import net.gamerverse.modpack.ModpackHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -50,6 +51,9 @@ public class ClientForgeHandler {
     }
 
     private static void hitBlockType(HitResult hitResult) {
+        if (minecraft.player == null || minecraft.level == null) {
+            return;
+        }
         BlockHitResult blockHitResult = (BlockHitResult) hitResult;
         BlockPos blockPos = blockHitResult.getBlockPos().immutable();
         var blockState = minecraft.level.getBlockState(blockPos);
@@ -89,24 +93,24 @@ public class ClientForgeHandler {
     }
 
     private static void sendMessage(BlockTypes blockTypes, String message) {
-        String formated_message;
-        if (Config.NOTIFICATION_FORMATING.get()) {
-            formated_message = MessageFormat.format("Copied {0} ( {1} ) to clipboard.", blockTypes.name, message);
-        } else {
-            formated_message = message;
-        }
+        if (minecraft.player == null) {return;}
 
-        if (minecraft.player == null) {
-            return;
+        MutableComponent finished_message;
+        if (Config.NOTIFICATION_FORMATING.get()) {
+            finished_message = Component.translatable("component.modpack_helper.copied_to_clipboard", blockTypes.name, message);
+
+        } else {
+            finished_message = Component.literal(message);
         }
+        System.out.println(finished_message);
 
         switch (Config.NOTIFICATION_LOCATION.get()) {
             case CHAT:
-                minecraft.player.sendSystemMessage(Component.literal(formated_message));
+                minecraft.player.sendSystemMessage(finished_message);
                 break;
 
             case ACTION_BAR:
-                minecraft.player.displayClientMessage(Component.literal(formated_message), true);
+                minecraft.player.displayClientMessage(finished_message, true);
                 break;
         }
     }
