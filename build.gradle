@@ -98,7 +98,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor "org.spongepowered:mixin:0.8.4:processor"
     runtimeOnly fg.deobf("curse.maven:config-menus-forge-544048:4672356")
-    runtimeOnly fg.deobf("curse.maven:embeddium-908741:5566632")
+    runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
 }
 
 tasks.named('processResources', ProcessResources).configure {

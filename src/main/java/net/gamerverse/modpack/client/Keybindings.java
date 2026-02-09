@@ -13,7 +13,7 @@ public final class Keybindings {
     private static final String CATEGORY = "key.categories." + ModpackHelper.MOD_ID;
 
     public final KeyMapping copyBlockId = new KeyMapping(
-            "key." + ModpackHelper.MOD_ID + ".copy_block_id",
+            "key." + ModpackHelper.MOD_ID + ".copy_default_id",
             KeyConflictContext.IN_GAME,
             InputConstants.UNKNOWN,
             CATEGORY
