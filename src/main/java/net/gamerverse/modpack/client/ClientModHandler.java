@@ -12,7 +12,9 @@ public class ClientModHandler {
 
     @SubscribeEvent
     public static void registerKeys(RegisterKeyMappingsEvent event) {
-        event.register(Keybindings.INSTANCE.copyBlockId);
-
+        event.register(Keybindings.INSTANCE.default_copy_id);
+        event.register(Keybindings.INSTANCE.none_copy_id);
+        event.register(Keybindings.INSTANCE.kubejs_copy_id);
+        event.register(Keybindings.INSTANCE.crafttweaker_copy_id);
     }
 }

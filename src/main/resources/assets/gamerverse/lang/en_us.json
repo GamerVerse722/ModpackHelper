@@ -1,6 +1,9 @@
 {
     "key.categories.modpack_helper": "Modpack Helper",
-    "key.modpack_helper.copy_default_id": "Default Copy ID",
+    "key.modpack_helper.default_copy_id": "Copy ID Default",
+    "key.modpack_helper.none_copy_id": "None Copy ID",
+    "key.modpack_helper.kubejs_copy_id": "KubeJS Copy ID",
+    "key.modpack_helper.crafttweaker_copy_id": "CraftTweaker Copy ID",
     "modpack_helper.component.copied_to_clipboard": "Copied %s (%s) to clipboard.",
     "modpack_helper.blocktypes.item": "item",
     "modpack_helper.blocktypes.block": "block",

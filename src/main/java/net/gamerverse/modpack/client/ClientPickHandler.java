@@ -1,10 +1,10 @@
 package net.gamerverse.modpack.client;
 
-import com.mojang.logging.LogUtils;
 import net.gamerverse.modpack.client.blocktypes.BlockTypes;
 import net.gamerverse.modpack.client.blocktypes.FormatBlockId;
 import net.gamerverse.modpack.Config;
 import net.gamerverse.modpack.ModpackHelper;
+import net.gamerverse.modpack.config.FormatMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -18,13 +18,11 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.slf4j.Logger;
 
 import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = ModpackHelper.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientPickHandler {
-    private static final Logger LOGGER = LogUtils.getLogger();
     private static final Minecraft minecraft = Minecraft.getInstance();
 
     private static boolean isClientNotReady() {
@@ -33,12 +31,13 @@ public class ClientPickHandler {
 
     @SubscribeEvent
     public static void clientTick(TickEvent.ClientTickEvent event) {
-        if (Keybindings.INSTANCE.copyBlockId.consumeClick()) {
-            copyTargetIdToClipboard();
-        }
+        if (Keybindings.INSTANCE.default_copy_id.consumeClick()) { copyTargetIdToClipboard(Config.PICK_FORMAT_MODE.get()); }
+        if (Keybindings.INSTANCE.none_copy_id.consumeClick()) { copyTargetIdToClipboard(FormatMode.NONE); }
+        if (Keybindings.INSTANCE.kubejs_copy_id.consumeClick()) { copyTargetIdToClipboard(FormatMode.KUBEJS); }
+        if (Keybindings.INSTANCE.crafttweaker_copy_id.consumeClick()) { copyTargetIdToClipboard(FormatMode.CRAFTTWEAKER); }
     }
 
-    private static void copyTargetIdToClipboard() {
+    private static void copyTargetIdToClipboard(FormatMode mode) {
         if (isClientNotReady()) return;
 
         HitResult hit = minecraft.player.pick(
@@ -48,12 +47,12 @@ public class ClientPickHandler {
         );
 
         switch (hit.getType()) {
-            case BLOCK -> handleBlockTarget((BlockHitResult) hit);
-            case MISS  -> handleAirTarget();
+            case BLOCK -> handleBlockTarget((BlockHitResult) hit, mode);
+            case MISS  -> handleAirTarget(mode);
         }
     }
 
-    private static void handleBlockTarget(BlockHitResult hit) {
+    private static void handleBlockTarget(BlockHitResult hit, FormatMode mode) {
         if (isClientNotReady()) return;
 
         BlockPos pos = hit.getBlockPos();
@@ -62,16 +61,16 @@ public class ClientPickHandler {
         if (state.getFluidState().isSource()) {
             var fluid = state.getFluidState().getType();
             String fluidId = Objects.requireNonNull(ForgeRegistries.FLUIDS.getKey(fluid)).toString();
-            copyAndNotify(BlockTypes.FLUID, fluidId);
+            copyAndNotify(BlockTypes.FLUID, fluidId, mode);
 
         } else {
             var block = state.getBlock();
             String blockId = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString();
-            copyAndNotify(BlockTypes.BLOCK, blockId);
+            copyAndNotify(BlockTypes.BLOCK, blockId, mode);
         }
     }
 
-    private static void handleAirTarget() {
+    private static void handleAirTarget(FormatMode mode) {
         if (isClientNotReady()) return;
         Item playerMainHandItem = minecraft.player.getMainHandItem().getItem();
         String itemId = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(playerMainHandItem)).toString();
@@ -80,11 +79,11 @@ public class ClientPickHandler {
             return;
         }
 
-        copyAndNotify(BlockTypes.ITEM, itemId);
+        copyAndNotify(BlockTypes.ITEM, itemId, mode);
     }
 
-    private static void copyAndNotify(BlockTypes type, String rawId) {
-        String formattedId = FormatBlockId.formatId(type, rawId);
+    private static void copyAndNotify(BlockTypes type, String rawId, FormatMode mode) {
+        String formattedId = FormatBlockId.formatId(type, rawId, mode);
         setClipboard(formattedId);
         sendNotification(type, formattedId);
     }
@@ -99,10 +98,8 @@ public class ClientPickHandler {
         MutableComponent component = buildMessage(type, message);
 
         switch (Config.NOTIFICATION_LOCATION.get()) {
-            case CHAT ->
-                    minecraft.player.sendSystemMessage(component);
-            case ACTION_BAR ->
-                    minecraft.player.displayClientMessage(component, true);
+            case CHAT -> minecraft.player.sendSystemMessage(component);
+            case ACTION_BAR -> minecraft.player.displayClientMessage(component, true);
         }
     }
 

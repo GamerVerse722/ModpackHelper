@@ -12,8 +12,29 @@ public final class Keybindings {
 
     private static final String CATEGORY = "key.categories." + ModpackHelper.MOD_ID;
 
-    public final KeyMapping copyBlockId = new KeyMapping(
-            "key." + ModpackHelper.MOD_ID + ".copy_default_id",
+    public final KeyMapping default_copy_id = new KeyMapping(
+            "key." + ModpackHelper.MOD_ID + ".default_copy_id",
+            KeyConflictContext.IN_GAME,
+            InputConstants.UNKNOWN,
+            CATEGORY
+    );
+
+    public final KeyMapping none_copy_id = new KeyMapping(
+            "key." + ModpackHelper.MOD_ID + ".none_copy_id",
+            KeyConflictContext.IN_GAME,
+            InputConstants.UNKNOWN,
+            CATEGORY
+    );
+
+    public final KeyMapping kubejs_copy_id = new KeyMapping(
+            "key." + ModpackHelper.MOD_ID + ".kubejs_copy_id",
+            KeyConflictContext.IN_GAME,
+            InputConstants.UNKNOWN,
+            CATEGORY
+    );
+
+    public final KeyMapping crafttweaker_copy_id = new KeyMapping(
+            "key." + ModpackHelper.MOD_ID + ".crafttweaker_copy_id",
             KeyConflictContext.IN_GAME,
             InputConstants.UNKNOWN,
             CATEGORY

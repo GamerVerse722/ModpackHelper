@@ -1,10 +1,11 @@
 package net.gamerverse.modpack.client.blocktypes;
 
 import net.gamerverse.modpack.Config;
+import net.gamerverse.modpack.config.FormatMode;
 
 public class FormatBlockId {
-    public static String formatId(BlockTypes blockTypes, String blockId) {
-        return switch (Config.PICK_FORMAT_MODE.get()) {
+    public static String formatId(BlockTypes blockTypes, String blockId, FormatMode mode) {
+        return switch (mode) {
             case NONE -> blockId;
             case KUBEJS -> formatKubeJs(blockTypes, blockId);
             case CRAFTTWEAKER -> formatCraftTweaker(blockTypes, blockId);
